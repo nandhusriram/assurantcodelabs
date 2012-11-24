@@ -1,0 +1,3 @@
+eclipse.preferences.version=1
+encoding//src/main/resources={project.build.sourceEncoding}
+encoding//src/test/resources={project.build.sourceEncoding}
