@@ -201,6 +201,11 @@
 			<artifactId>aspectjweaver</artifactId>
 			<version>${aspectJVersion}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>13.0.1</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>codelabs</finalName>

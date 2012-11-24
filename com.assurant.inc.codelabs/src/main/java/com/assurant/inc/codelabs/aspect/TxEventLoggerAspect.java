@@ -11,6 +11,8 @@ import org.springframework.stereotype.Component;
 
 import com.assurant.inc.codelabs.domain.InstrumentationObject;
 import com.assurant.inc.codelabs.mongo.dao.TransactionEventLoggerDao;
+import com.google.common.base.Joiner;
+import com.google.common.base.Throwables;
 
 @Aspect
 @Component
@@ -25,9 +27,10 @@ public class TxEventLoggerAspect {
 	public void logBefore(JoinPoint joinPoint) throws Throwable {
 		String serviceName=new StringBuilder().append(joinPoint.getTarget().getClass().getSimpleName()).append(":").append(joinPoint.getSignature().getName()).toString();
 		String startTS=new DateTime().toString();
+		Joiner joiner = Joiner.on(":").skipNulls();
 		InstrumentationObject.InstrumentationObjectBuilder builder=InstrumentationObject.InstrumentationObjectBuilder
 				.service(serviceName).app("MIDAAS").system("IMM")
-				.start(startTS).user("NS48235");
+				.start(startTS).user("NS48235").arg(joiner.join(joinPoint.getArgs()));
 		txEventThreadLocal.set(builder);
 	}
 	
@@ -43,7 +46,8 @@ public class TxEventLoggerAspect {
 	@AfterThrowing(pointcut = "execution(* com.assurant.inc.codelabs.jersey.rs.*.*(..))", throwing = "error")
 	public void logAfterThrowing(JoinPoint joinPoint, Throwable error) {
 		String endTS=new DateTime().toString();
-		eventDao.insert(txEventThreadLocal.get().end(endTS).result(FAILED).build(),"TxEvents");
+		String exception=Throwables.getStackTraceAsString(error);
+		eventDao.insert(txEventThreadLocal.get().end(endTS).result(FAILED).err(exception).build(),"TxEvents");
 		txEventThreadLocal.remove();
 	}
 }

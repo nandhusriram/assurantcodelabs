@@ -13,7 +13,8 @@ public class InstrumentationObject {
 	public String ts;
 	public String sysName;
 	public String aName;
-	
+	public String args;
+	public String error;
 	private InstrumentationObject(InstrumentationObjectBuilder builder) {
 		this.svcName = builder.serviceName;
 		this.startTS = builder.serviceStartTime;
@@ -23,6 +24,8 @@ public class InstrumentationObject {
 		this.ts=builder.elapsedTime;
 		this.aName=builder.applicationName;
 		this.sysName=builder.systemName;
+		this.args=builder.args;
+		this.error=builder.error;
 	}
 
 	public static class InstrumentationObjectBuilder {
@@ -34,7 +37,8 @@ public class InstrumentationObject {
 		private String elapsedTime;
 		private String systemName;
 		private String applicationName;
-		
+		private String args;
+		private String error;
 		public  InstrumentationObjectBuilder getInstrumentationObjectBuilder()
 		{
 			return this;
@@ -83,6 +87,16 @@ public class InstrumentationObject {
 			return this;
 		}
 		
+		public InstrumentationObjectBuilder arg(String argument)
+		{
+			this.args=argument;
+			return this;
+		}
+		public InstrumentationObjectBuilder err(String exception)
+		{
+			this.error=exception;
+			return this;
+		}
 		public InstrumentationObject build() {
 			return new InstrumentationObject(this);
 		}

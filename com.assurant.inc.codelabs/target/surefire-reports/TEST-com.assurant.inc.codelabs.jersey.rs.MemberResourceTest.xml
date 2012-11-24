@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite failures="0" time="12.032" errors="0" skipped="0" tests="3" name="com.assurant.inc.codelabs.jersey.rs.MemberResourceTest">
+<testsuite failures="0" time="9.016" errors="0" skipped="0" tests="3" name="com.assurant.inc.codelabs.jersey.rs.MemberResourceTest">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Libraries"/>
@@ -17,7 +17,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.os.patch.level" value="unknown"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
-    <property name="user.dir" value="/Users/nandhu/development/workspace/com.assurant.inc.codelabs"/>
+    <property name="user.dir" value="/Users/nandhu/git/assurantcodelabs/com.assurant.inc.codelabs"/>
     <property name="java.runtime.version" value="1.6.0_37-b06-434-11M3909"/>
     <property name="java.awt.graphicsenv" value="apple.awt.CGraphicsEnvironment"/>
     <property name="java.endorsed.dirs" value="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/endorsed"/>
@@ -27,7 +27,7 @@
 "/>
     <property name="java.vm.specification.vendor" value="Sun Microsystems Inc."/>
     <property name="os.name" value="Mac OS X"/>
-    <property name="classworlds.conf" value="/Users/nandhu/development/workspace/.metadata/.plugins/org.eclipse.m2e.core/launches/m2conf1376970698821261780.tmp"/>
+    <property name="classworlds.conf" value="/Users/nandhu/development/workspace/.metadata/.plugins/org.eclipse.m2e.core/launches/m2conf6297156128213856361.tmp"/>
     <property name="sun.jnu.encoding" value="MacRoman"/>
     <property name="java.library.path" value=".:/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
@@ -54,7 +54,7 @@
     <property name="java.ext.dirs" value="/Library/Java/Extensions:/System/Library/Java/Extensions:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/ext"/>
     <property name="sun.boot.class.path" value="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/jsfd.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/classes.jar:/System/Library/Frameworks/JavaVM.framework/Frameworks/JavaRuntimeSupport.framework/Resources/Java/JavaRuntimeSupport.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/ui.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/laf.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/sunrsasign.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/jsse.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/jce.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/charsets.jar"/>
     <property name="java.vendor" value="Apple Inc."/>
-    <property name="maven.home" value="/Users/nandhu/development/workspace/com.assurant.inc.codelabs/EMBEDDED"/>
+    <property name="maven.home" value="/Users/nandhu/git/assurantcodelabs/com.assurant.inc.codelabs/EMBEDDED"/>
     <property name="file.separator" value="/"/>
     <property name="java.vendor.url.bug" value="http://bugreport.apple.com/"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -64,7 +64,7 @@
     <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase time="8.464" classname="com.assurant.inc.codelabs.jersey.rs.MemberResourceTest" name="getAllMembers"/>
-  <testcase time="1.254" classname="com.assurant.inc.codelabs.jersey.rs.MemberResourceTest" name="getMember"/>
-  <testcase time="2.144" classname="com.assurant.inc.codelabs.jersey.rs.MemberResourceTest" name="insertMember"/>
+  <testcase time="5.528" classname="com.assurant.inc.codelabs.jersey.rs.MemberResourceTest" name="getAllMembers"/>
+  <testcase time="1.352" classname="com.assurant.inc.codelabs.jersey.rs.MemberResourceTest" name="getMember"/>
+  <testcase time="2.061" classname="com.assurant.inc.codelabs.jersey.rs.MemberResourceTest" name="insertMember"/>
 </testsuite>
