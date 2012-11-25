@@ -22,7 +22,6 @@ public class CodelabsWebApplicationInitializer implements WebApplicationInitiali
 		// Create the 'root' Spring application context
         AnnotationConfigWebApplicationContext root = new AnnotationConfigWebApplicationContext();
         root.scan("com.assurant.inc.codelabs");
- 
         // Manages the lifecycle of the root application context
         servletContext.addListener(new ContextLoaderListener(root));
         servletContext.addListener(new RequestContextListener());
@@ -33,40 +32,12 @@ public class CodelabsWebApplicationInitializer implements WebApplicationInitiali
         		"com.assurant.inc.codelabs.jersey.rs");
         jerseyServlet.addMapping("/*");
         jerseyServlet.setLoadOnStartup(1);
-        servletContext.setInitParameter(JSONConfiguration.FEATURE_POJO_MAPPING, "true");
-        
-        //Jersey  logging filter
-        
+        servletContext.setInitParameter(JSONConfiguration.FEATURE_POJO_MAPPING, "true");      
+        //Jersey  logging filter      
         jerseyServlet.setInitParameter("com.sun.jersey.spi.container.ContainerRequestFilters", 
-        		"com.sun.jersey.api.container.filter.LoggingFilter");
-        
+        		"com.sun.jersey.api.container.filter.LoggingFilter");    
         jerseyServlet.setInitParameter("com.sun.jersey.spi.container.ContainerResponseFilters", 
         		"com.sun.jersey.api.container.filter.LoggingFilter");
         jerseyServlet.setInitParameter(LoggingFilter.FEATURE_LOGGING_DISABLE_ENTITY,"false");
-       // jerseyServlet.setInitParameter("com.sun.jersey.config.feature.Trace", "true");
-        
-       /* try {
-			initDetailedJerseyLoggingIntoFile();
-		} catch (Exception e) {
-			//ignore it
-			e.printStackTrace();
-		}
-        */
-	}
-	
-	/*public  void initDetailedJerseyLoggingIntoFile() throws Exception {
-        String tmpFileDirectory = System.getProperty("catalina.base");
-        tmpFileDirectory=tmpFileDirectory+File.separatorChar+"logs";
-        File logFile = new File(tmpFileDirectory, "codelabs-jersey-services.log");
-        //2 mb file  , 10 backup files
-        FileHandler fh=new FileHandler(logFile.getPath(),2097152,10,true);
-        
-        fh.setFormatter(new java.util.logging.SimpleFormatter());
-        
-        Logger.getLogger("").addHandler(fh);
-        //%h/java%u.log
-        Logger.getLogger("com.sun.jersey").setLevel(Level.INFO);
-	}
-*/
-
+	}	
 }

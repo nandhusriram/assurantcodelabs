@@ -18,14 +18,14 @@ public class MongoConfig extends AbstractMongoConfiguration {
 	}
 
 	@Override
-	@Bean
+	@Bean(destroyMethod = "close")
 	public Mongo mongo() throws Exception {
 		return new Mongo("localhost");
 	}
-	
-	 @Override
-	  public MongoTemplate mongoTemplate() throws Exception {
-	    return new MongoTemplate(mongo() , getDatabaseName());
-	  }
 
+	@Override
+	public MongoTemplate mongoTemplate() throws Exception {
+		return new MongoTemplate(mongo(), getDatabaseName());
+	}
+	
 }
