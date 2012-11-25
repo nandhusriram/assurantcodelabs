@@ -1,10 +1,13 @@
 package com.assurant.inc.codelabs.domain;
 
+import java.util.UUID;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 public class InstrumentationObject {
 
+	public String _id;
 	public String svcName;
 	public String startTS;
 	public String endTS;
@@ -15,6 +18,7 @@ public class InstrumentationObject {
 	public String aName;
 	public String args;
 	public String error;
+	
 	private InstrumentationObject(InstrumentationObjectBuilder builder) {
 		this.svcName = builder.serviceName;
 		this.startTS = builder.serviceStartTime;
@@ -26,6 +30,7 @@ public class InstrumentationObject {
 		this.sysName=builder.systemName;
 		this.args=builder.args;
 		this.error=builder.error;
+		this._id=builder.id;
 	}
 
 	public static class InstrumentationObjectBuilder {
@@ -39,6 +44,7 @@ public class InstrumentationObject {
 		private String applicationName;
 		private String args;
 		private String error;
+		private String id;
 		public  InstrumentationObjectBuilder getInstrumentationObjectBuilder()
 		{
 			return this;
@@ -51,6 +57,7 @@ public class InstrumentationObject {
 		public static InstrumentationObjectBuilder service(String serviceName) {
 			InstrumentationObjectBuilder builder = new InstrumentationObjectBuilder();
 			builder.serviceName = serviceName;
+			builder.id=UUID.randomUUID().toString();
 			return builder;
 
 		}

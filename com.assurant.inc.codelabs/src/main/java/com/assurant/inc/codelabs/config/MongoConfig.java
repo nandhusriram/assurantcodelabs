@@ -4,12 +4,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
-import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.convert.DefaultMongoTypeMapper;
+import org.springframework.data.mongodb.core.convert.MappingMongoConverter;
+import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 
 import com.mongodb.Mongo;
 
 @Configuration
-@EnableAspectJAutoProxy(proxyTargetClass=true)
+@EnableAspectJAutoProxy(proxyTargetClass = true)
 public class MongoConfig extends AbstractMongoConfiguration {
 
 	@Override
@@ -24,8 +26,13 @@ public class MongoConfig extends AbstractMongoConfiguration {
 	}
 
 	@Override
-	public MongoTemplate mongoTemplate() throws Exception {
-		return new MongoTemplate(mongo(), getDatabaseName());
+	@Bean
+	public MappingMongoConverter mappingMongoConverter() throws Exception {
+		// remove _class
+		MappingMongoConverter converter = new MappingMongoConverter(
+				mongoDbFactory(), new MongoMappingContext());
+		converter.setTypeMapper(new DefaultMongoTypeMapper(null));
+		return converter;
 	}
-	
+
 }
