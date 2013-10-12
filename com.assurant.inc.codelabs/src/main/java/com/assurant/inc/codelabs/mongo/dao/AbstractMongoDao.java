@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @Scope
-
 public abstract class AbstractMongoDao<T extends Object> {
 
 	private final Class<T> clazzOfItem;
@@ -35,6 +34,11 @@ public abstract class AbstractMongoDao<T extends Object> {
 	{
 		return mongoOps.find(query, clazzOfItem);
 	}
+	
+	public List<T> findAll()
+	{
+		return mongoOps.findAll(clazzOfItem,"TxEvents");
+	}
     
 	public void insert(T object,String collectionName)
 	{
@@ -44,5 +48,10 @@ public abstract class AbstractMongoDao<T extends Object> {
 	public void setMongoOps(MongoOperations mongoOps)
 	{
 		this.mongoOps = mongoOps;
+	}
+	
+	public MongoOperations getMongoOperations()
+	{
+		return mongoOps;
 	}
 }

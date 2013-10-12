@@ -4,8 +4,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.type.TypeReference;
 
 @XmlRootElement
 public class Member {
@@ -29,7 +27,7 @@ public class Member {
 		
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
 	}
-	public static <T> T fromJSON(final TypeReference<T> type,final String jsonPacket)
+	/*public static <T> T fromJSON(final TypeReference<T> type,final String jsonPacket)
 	{
 		   T data = null;
 		   try 
@@ -42,5 +40,5 @@ public class Member {
 			   return data;
 		   }
 		   return data;
-	} 
+	} */
 }

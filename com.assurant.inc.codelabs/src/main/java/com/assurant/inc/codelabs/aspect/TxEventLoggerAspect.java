@@ -25,12 +25,13 @@ public class TxEventLoggerAspect {
 	
 	@Before("execution(* com.assurant.inc.codelabs.jersey.rs.*.*(..))")
 	public void logBefore(JoinPoint joinPoint) throws Throwable {
-		String serviceName=new StringBuilder().append(joinPoint.getTarget().getClass().getSimpleName()).append(":").append(joinPoint.getSignature().getName()).toString();
-		String startTS=new DateTime().toString();
+		String serviceName;
+        serviceName = new StringBuilder().append(joinPoint.getTarget().getClass().getSimpleName()).append(":").append(joinPoint.getSignature().getName()).toString();
+        String startTS=new DateTime().toString();
 		Joiner joiner = Joiner.on(":").skipNulls();
 		InstrumentationObject.InstrumentationObjectBuilder builder=InstrumentationObject.InstrumentationObjectBuilder
-				.service(serviceName).app("MIDAAS").system("IMM")
-				.start(startTS).user("NS48235").arg(joiner.join(joinPoint.getArgs()));
+				.service(serviceName).app("TEST").system("TST")
+				.start(startTS).user("NANDHU").arg(joiner.join(joinPoint.getArgs()));
 		txEventThreadLocal.set(builder);
 	}
 	

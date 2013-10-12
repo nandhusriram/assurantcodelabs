@@ -6,19 +6,36 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<properties>
-		<jerseyVersion>1.15</jerseyVersion>
+		<jerseyVersion>2.2</jerseyVersion>
 		<jacksonVersion>1.9.9</jacksonVersion>
-		<logbackVersion>1.0.7</logbackVersion>
-		<mongojavadriverVersion>2.9.3</mongojavadriverVersion>
-		<slf4jVersion>1.6.6</slf4jVersion>
+		<logbackVersion>1.0.13</logbackVersion>
+		<mongojavadriverVersion>2.11.2</mongojavadriverVersion>
+		<slf4jVersion>1.7.2</slf4jVersion>
 		<jodaTimeVersion>2.1</jodaTimeVersion>
 		<commonslangVersion>3.1</commonslangVersion>
-		<springVersion>3.1.3.RELEASE</springVersion>
+		<springVersion>3.2.3.RELEASE</springVersion>
 		<cglibVersion>2.2.2</cglibVersion>
 		<aspectJVersion>1.7.0</aspectJVersion>
 		<cargo.version>1.3.1</cargo.version>
+		<junitVersion>4.11</junitVersion>
 	</properties>
 	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junitVersion}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>hamcrest-core</artifactId>
+					<groupId>org.hamcrest</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.hamcrest</groupId>
+			<artifactId>hamcrest-all</artifactId>
+			<version>1.3</version>
+		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
@@ -26,18 +43,43 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.sun.jersey</groupId>
+			<groupId>org.glassfish.jersey.media</groupId>
+			<artifactId>jersey-media-moxy</artifactId>
+			<version>${jerseyVersion}</version>
+		</dependency>
+		<!-- <dependency> <groupId>org.glassfish.jersey</groupId> <artifactId>jersey-bom</artifactId> 
+			<version>${jerseyVersion}</version> </dependency> -->
+		<dependency>
+			<groupId>org.glassfish.jersey.ext</groupId>
+			<artifactId>jersey-spring3</artifactId>
+			<version>${jerseyVersion}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>
+						jersey-container-servlet-core
+					</artifactId>
+					<groupId>org.glassfish.jersey.containers</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.core</groupId>
 			<artifactId>jersey-server</artifactId>
 			<version>${jerseyVersion}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.sun.jersey</groupId>
+			<groupId>org.glassfish.jersey.core</groupId>
 			<artifactId>jersey-client</artifactId>
 			<version>${jerseyVersion}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.sun.jersey</groupId>
-			<artifactId>jersey-json</artifactId>
+			<groupId>org.glassfish.jersey.core</groupId>
+			<artifactId>jersey-common</artifactId>
+			<version>${jerseyVersion}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.media</groupId>
+			<artifactId>jersey-media-json-jackson</artifactId>
 			<version>${jerseyVersion}</version>
 			<exclusions>
 				<exclusion>
@@ -79,15 +121,49 @@
 			</exclusions>
 		</dependency>
 		<dependency>
-			<groupId>com.sun.jersey.jersey-test-framework</groupId>
-			<artifactId>jersey-test-framework-grizzly</artifactId>
+			<groupId>org.glassfish.jersey.test-framework</groupId>
+			<artifactId>jersey-test-framework-core</artifactId>
 			<version>${jerseyVersion}</version>
 			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<artifactId>junit</artifactId>
+					<groupId>junit</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>servlet-api</artifactId>
+					<groupId>javax.servlet</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-			<version>3.1</version>
+			<groupId>org.glassfish.jersey.test-framework.providers</groupId>
+			<artifactId>jersey-test-framework-provider-grizzly2</artifactId>
+			<version>${jerseyVersion}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.media</groupId>
+			<artifactId>jersey-media-sse</artifactId>
+			<version>${jerseyVersion}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.containers</groupId>
+			<!-- if your container implements Servlet API older than 3.0, use "jersey-container-servlet-core" -->
+			<artifactId>jersey-container-servlet</artifactId>
+			<version>${jerseyVersion}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>
+						jersey-container-servlet-core
+					</artifactId>
+					<groupId>org.glassfish.jersey.containers</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.containers</groupId>
+			<artifactId>jersey-container-grizzly2-http</artifactId>
+			<version>${jerseyVersion}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
@@ -118,7 +194,33 @@
 		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-mongodb</artifactId>
-			<version>1.0.3.RELEASE</version>
+			<version>1.2.3.RELEASE</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>spring-tx</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-context</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-beans</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-core</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-expression</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>mongo-java-driver</artifactId>
+					<groupId>org.mongodb</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
@@ -129,11 +231,6 @@
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
 			<version>${logbackVersion}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.mongodb</groupId>
-			<artifactId>mongo-java-driver</artifactId>
-			<version>${mongojavadriverVersion}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -150,43 +247,24 @@
 			<artifactId>commons-lang3</artifactId>
 			<version>${commonslangVersion}</version>
 		</dependency>
-
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>${springVersion}</version>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
 			<version>${springVersion}</version>
 		</dependency>
-		<dependency>
-			<groupId>com.sun.jersey.contribs</groupId>
-			<artifactId>jersey-spring</artifactId>
-			<version>${jerseyVersion}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-core</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-web</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-beans</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-context</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-aop</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
+		<!-- <dependency> <groupId>com.sun.jersey.contribs</groupId> <artifactId>jersey-spring</artifactId> 
+			<version>${jerseyVersion}</version> <exclusions> <exclusion> <groupId>org.springframework</groupId> 
+			<artifactId>spring</artifactId> </exclusion> <exclusion> <groupId>org.springframework</groupId> 
+			<artifactId>spring-core</artifactId> </exclusion> <exclusion> <groupId>org.springframework</groupId> 
+			<artifactId>spring-web</artifactId> </exclusion> <exclusion> <groupId>org.springframework</groupId> 
+			<artifactId>spring-beans</artifactId> </exclusion> <exclusion> <groupId>org.springframework</groupId> 
+			<artifactId>spring-context</artifactId> </exclusion> <exclusion> <groupId>org.springframework</groupId> 
+			<artifactId>spring-aop</artifactId> </exclusion> </exclusions> </dependency> -->
 		<dependency>
 			<groupId>cglib</groupId>
 			<artifactId>cglib</artifactId>
@@ -206,6 +284,11 @@
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
 			<version>13.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>1.8</version>
 		</dependency>
 		<!-- cargo tomcat -->
 		<dependency>
@@ -268,13 +351,23 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-	<groupId>jaxen</groupId>
-	<artifactId>jaxen</artifactId>
-	<version>1.1.4</version>
-	<scope>test</scope>
-</dependency>
-            
-            
+			<groupId>jaxen</groupId>
+			<artifactId>jaxen</artifactId>
+			<version>1.1.4</version>
+			<scope>test</scope>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.glassfish.jersey.containers</groupId>
+			<artifactId>jersey-container-servlet-core</artifactId>
+			<version>${jerseyVersion}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongo-java-driver</artifactId>
+			<version>2.11.2</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>codelabs</finalName>

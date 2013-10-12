@@ -2,9 +2,12 @@ package com.assurant.inc.codelabs.domain;
 
 import java.util.UUID;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+@XmlRootElement
 public class InstrumentationObject {
 
 	public String _id;
@@ -18,6 +21,11 @@ public class InstrumentationObject {
 	public String aName;
 	public String args;
 	public String error;
+	
+	public InstrumentationObject()
+	{
+		
+	}
 	
 	private InstrumentationObject(InstrumentationObjectBuilder builder) {
 		this.svcName = builder.serviceName;

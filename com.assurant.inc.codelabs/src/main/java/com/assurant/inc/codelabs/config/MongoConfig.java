@@ -9,6 +9,9 @@ import org.springframework.data.mongodb.core.convert.MappingMongoConverter;
 import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 
 import com.mongodb.Mongo;
+import com.mongodb.MongoClient;
+import com.mongodb.MongoClientOptions;
+import com.mongodb.WriteConcern;
 
 @Configuration
 @EnableAspectJAutoProxy(proxyTargetClass = true)
@@ -22,7 +25,7 @@ public class MongoConfig extends AbstractMongoConfiguration {
 	@Override
 	@Bean(destroyMethod = "close")
 	public Mongo mongo() throws Exception {
-		return new Mongo("localhost");
+		return mongoClient();
 	}
 
 	@Override
@@ -33,6 +36,17 @@ public class MongoConfig extends AbstractMongoConfiguration {
 				mongoDbFactory(), new MongoMappingContext());
 		converter.setTypeMapper(new DefaultMongoTypeMapper(null));
 		return converter;
+	}
+	
+	@Bean(destroyMethod = "close")
+	public MongoClient mongoClient() throws Exception
+	{
+		MongoClientOptions options=new MongoClientOptions.Builder()
+		.autoConnectRetry(true).connectionsPerHost(10).writeConcern(WriteConcern.ACKNOWLEDGED)
+		.cursorFinalizerEnabled(true).build();
+	
+		MongoClient mongoClient=new MongoClient("localhost", options);
+		return mongoClient;
 	}
 
 }
