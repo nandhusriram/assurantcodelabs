@@ -23,6 +23,8 @@ import org.junit.runner.RunWith;
 
 
 
+
+import com.assurant.inc.codelabs.crypto.CipherUtil;
 import com.assurant.inc.codelabs.domain.InstrumentationObject;
 import com.assurant.inc.codelabs.initializer.CodelabsWebApplication;
 import com.assurant.inc.codelabs.jersey.Member;
@@ -107,17 +109,20 @@ public class MemberResourceTest extends JerseyTest {
 	public void getMember() throws Exception
 	{
 		ObjectMapper mapper=new ObjectMapper();
-		String passphrase="LETSGOROYALS2014";
+		//String passphrase="LETSGOROYALS2014";
 
-		SecretKeySpec key = new SecretKeySpec(passphrase.getBytes(), "AES");
+		//SecretKeySpec key = new SecretKeySpec(passphrase.getBytes(), "AES");
 		
-		Cipher aes = Cipher.getInstance("AES");
-		aes.init(Cipher.ENCRYPT_MODE, key);
+		//Cipher aes = Cipher.getInstance("AES");
+		//aes.init(Cipher.ENCRYPT_MODE, key);
 		
-		byte[] ciphertext = aes.doFinal("01091980".getBytes());
-        byte[] encryptedByteValue =  new Base64().encode(ciphertext);
+		//byte[] ciphertext = aes.doFinal("01091980".getBytes());
+       // byte[] encryptedByteValue =  new Base64().encode(ciphertext);
 		
-		String encryptedDOB=new String(encryptedByteValue);
+		//String encryptedDOB=new String(encryptedByteValue);
+		CipherUtil util=new CipherUtil();
+		util.createKey();
+		String encryptedDOB=util.encryptAndEncode("01091980");
 		String response=target().path("member").path(encryptedDOB) .request(MediaType.APPLICATION_JSON)
                 .get(String.class);
 		//System.out.println(target().path("member").path(encryptedDOB) .request(MediaType.APPLICATION_JSON)

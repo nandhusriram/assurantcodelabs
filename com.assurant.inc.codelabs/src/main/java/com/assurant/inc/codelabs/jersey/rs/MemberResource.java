@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import javax.crypto.Cipher;
-import javax.crypto.spec.SecretKeySpec;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
@@ -18,10 +16,10 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
 
-import org.apache.commons.codec.binary.Base64;
 import org.glassfish.jersey.process.internal.RequestScoped;
 import org.springframework.stereotype.Component;
 
+import com.assurant.inc.codelabs.crypto.CipherUtil;
 import com.assurant.inc.codelabs.domain.InstrumentationObject;
 import com.assurant.inc.codelabs.jersey.Member;
 import com.assurant.inc.codelabs.mongo.dao.TransactionEventLoggerDao;
@@ -69,12 +67,16 @@ public class MemberResource {
 	@Path("/{dob}")
 	public Member getMember(@PathParam("dob") String dob) throws Exception
 	{			
-		String passphrase="LETSGOROYALS2014";
+		/*String passphrase="LETSGOROYALS2014";
 		SecretKeySpec key = new SecretKeySpec(passphrase.getBytes(), "AES");	
 		Cipher aes = Cipher.getInstance("AES");
 		aes.init(Cipher.DECRYPT_MODE, key);
 		
 		String dobDecrypted = new String(aes.doFinal(new Base64().decode( dob.getBytes())));
+		*/
+		CipherUtil util=new CipherUtil();
+		util.createKey();
+		String dobDecrypted=util.decryptAndDecode(dob);
 		System.out.println(dobDecrypted);
 		Member member=new Member();
 		member.setDob("12/02/2012");
