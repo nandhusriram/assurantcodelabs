@@ -32,7 +32,7 @@ public class CipherUtil {
 		SecretKeyFactory factory = SecretKeyFactory
 				.getInstance("PBKDF2WithHmacSHA1");
 		SecretKey tmp = factory.generateSecret(new PBEKeySpec(passphrase
-				.toCharArray(), salt, iterations, 256));
+				.toCharArray(), salt, iterations, 128));
 		this.key = new SecretKeySpec(tmp.getEncoded(), "AES");
 
 	}
