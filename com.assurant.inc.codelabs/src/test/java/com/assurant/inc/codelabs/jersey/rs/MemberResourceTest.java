@@ -3,13 +3,10 @@ package com.assurant.inc.codelabs.jersey.rs;
 import java.util.List;
 import java.util.logging.LogRecord;
 
-import javax.crypto.Cipher;
-import javax.crypto.spec.SecretKeySpec;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
 
-import org.apache.commons.codec.binary.Base64;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 import org.glassfish.jersey.test.JerseyTest;
@@ -19,10 +16,6 @@ import org.glassfish.jersey.test.spi.TestContainerException;
 import org.glassfish.jersey.test.spi.TestContainerFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-
-
-
 
 import com.assurant.inc.codelabs.crypto.CipherUtil;
 import com.assurant.inc.codelabs.domain.InstrumentationObject;
