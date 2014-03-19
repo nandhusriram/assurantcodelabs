@@ -35,7 +35,8 @@ public class MemberResourceTest extends JerseyTest {
 		enable(TestProperties.DUMP_ENTITY);
 		enable(TestProperties.RECORD_LOG_LEVEL);
 		System.setProperty(TestProperties.RECORD_LOG_LEVEL, "700");
-		return new CodelabsWebApplication();
+		 //ApplicationContext context = new AnnotationConfigApplicationContext(MongoConfig.class);
+		return new CodelabsWebApplication();//.property("contextConfig", context);
 	}
 
 	@Override
@@ -132,7 +133,9 @@ public class MemberResourceTest extends JerseyTest {
 	public void insertMember() throws Exception
 	{
 		ObjectMapper mapper=new ObjectMapper();
-		String response=target().path("member").path("01091980") 
+		CipherUtil util=new CipherUtil();
+		util.createKey();
+		String response=target().path("member").path(util.encryptAndEncode("01091980")) 
 				.request(MediaType.APPLICATION_JSON)
                 .get(String.class);
 		System.out.println(response);

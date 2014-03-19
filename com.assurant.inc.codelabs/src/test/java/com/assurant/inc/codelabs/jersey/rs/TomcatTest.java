@@ -1,11 +1,11 @@
 package com.assurant.inc.codelabs.jersey.rs;
 
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
 
 import org.glassfish.jersey.media.sse.EventSource;
 import org.glassfish.jersey.media.sse.InboundEvent;
@@ -18,15 +18,15 @@ public class TomcatTest {
 	public void test() {
 		Client client = ClientBuilder.newBuilder().register(SseFeature.class)
 				.build();
-		WebTarget target = client.target("http://localhost:9080/codelabs/broadcaster");
+		WebTarget target = client.target("http://localhost:8080/codelabs/broadcaster");
 		EventSource eventSource = new EventSource(target) {
 		    @Override
 		    public void onEvent(InboundEvent inboundEvent) {
 		        if ("message".equals(inboundEvent.getName())) {
 		            try {
 		                System.out.println(inboundEvent.getName() + "; "
-		                        + inboundEvent.getData(String.class));
-		            } catch (IOException e) {
+		                        + inboundEvent.readData(String.class));
+		            } catch (Exception e) {
 		                throw new RuntimeException(
 		                        "Error when deserializing of data.");
 		            }
@@ -34,6 +34,14 @@ public class TomcatTest {
 		    }
 		};
 		
-		eventSource.close(60, TimeUnit.HOURS);
+		eventSource.close(60, TimeUnit.SECONDS);
+	}
+	@Test
+	public void member() {
+		Client client = ClientBuilder.newBuilder()
+				.build();
+		String members = client.target("http://localhost:8080/codelabs/version").request(MediaType.TEXT_PLAIN)
+                .get(String.class);
+		System.out.println(members);
 	}
 }

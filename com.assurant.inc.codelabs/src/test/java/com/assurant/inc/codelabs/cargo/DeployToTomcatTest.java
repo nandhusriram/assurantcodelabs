@@ -21,6 +21,7 @@ import org.codehaus.cargo.util.log.LogLevel;
 import org.codehaus.cargo.util.log.SimpleLogger;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -28,7 +29,7 @@ import com.assurant.inc.codelabs.test.Order;
 import com.assurant.inc.codelabs.test.OrderedRunner;
 @RunWith(OrderedRunner.class)
 @Order(order=6)
-
+//@Ignore
 public class DeployToTomcatTest {
 
 	
@@ -38,22 +39,22 @@ public class DeployToTomcatTest {
 	{
 
 		Deployable war = new DefaultDeployableFactory().createDeployable(
-				"tomcat7x", "./target/codelabs.war", DeployableType.WAR);
+				"tomcat8x", "./target/codelabs.war", DeployableType.WAR);
 
 		RuntimeConfiguration runtimeConfig=new TomcatRuntimeConfiguration();
 		runtimeConfig.setProperty("cargo.remote.username", "admin");
-		runtimeConfig.setProperty("cargo.remote.uri", "http://localhost:9080/manager/text");
+		runtimeConfig.setProperty("cargo.remote.uri", "http://localhost:8080/manager/text");
 		runtimeConfig.setProperty("cargo.remote.password", "admin");
-		runtimeConfig.setProperty("cargo.servlet.port","9080");
+		runtimeConfig.setProperty("cargo.servlet.port","8080");
 		RemoteContainer container = (RemoteContainer) new DefaultContainerFactory()
-				.createContainer("tomcat7x", ContainerType.REMOTE,
+				.createContainer("tomcat8x", ContainerType.REMOTE,
 						runtimeConfig);
 		SimpleLogger simple=new SimpleLogger();
 		simple.setLevel(LogLevel.DEBUG);
 		container.setLogger(simple);
 		container.setConfiguration(runtimeConfig);
 		URLDeployableMonitor monitor = new URLDeployableMonitor(new URL(
-				"http://localhost:9080/codelabs/version"));
+				"http://localhost:8080/codelabs/version"));
 		
 		Deployer deployer = new DefaultDeployerFactory().createDeployer(
 				container, DeployerType.REMOTE);
@@ -73,7 +74,7 @@ public class DeployToTomcatTest {
 	public void test()  throws Exception{
 		try {
 			
-			  final URL url = new URL("http://localhost:9080/codelabs/version");
+			  final URL url = new URL("http://localhost:8080/codelabs/version");
 			  final HttpURLConnection urlConn = (HttpURLConnection) url.openConnection();
 			  urlConn.setConnectTimeout(1000 * 2); // mTimeout is in seconds
 			  final long startTime = System.currentTimeMillis();

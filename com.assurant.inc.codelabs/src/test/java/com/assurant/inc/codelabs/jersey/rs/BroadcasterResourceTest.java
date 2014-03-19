@@ -1,6 +1,5 @@
 package com.assurant.inc.codelabs.jersey.rs;
 
-import java.io.IOException;
 import java.net.URI;
 import java.util.concurrent.TimeUnit;
 
@@ -71,14 +70,14 @@ public class BroadcasterResourceTest extends JerseyTest {
 		        if ("message".equals(inboundEvent.getName())) {
 		            try {
 		                System.out.println(inboundEvent.getName() + "; "
-		                        + inboundEvent.getData(String.class));
-		            } catch (IOException e) {
+		                        + inboundEvent.readData(String.class));
+		            } catch (Exception e) {
 		                throw new RuntimeException(
 		                        "Error when deserializing of data.");
 		            }
 		        }
 		    }
 		};
-		eventSource.close(60,TimeUnit.HOURS);
+		eventSource.close(60,TimeUnit.MILLISECONDS);
 	}
 }
