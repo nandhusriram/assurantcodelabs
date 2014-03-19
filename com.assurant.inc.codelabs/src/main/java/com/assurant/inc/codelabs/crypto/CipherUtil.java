@@ -1,6 +1,7 @@
 package com.assurant.inc.codelabs.crypto;
 
 import java.security.Key;
+import java.security.SecureRandom;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
@@ -19,20 +20,28 @@ import org.apache.commons.codec.binary.Base64;
 public class CipherUtil {
 
 	private Key key = null;
+	private static final int HASH_BYTE_SIZE = 128; // 512 bits
 	
 	public CipherUtil() 
 	{
 		
 	}
 
+	private byte[] generateSalt() throws Exception
+	{
+		SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
+		byte salt[] = new byte[HASH_BYTE_SIZE]; // use salt size at least as long as hash
+	    random.nextBytes(salt);
+		return salt;
+	}
+	
 	public void createKey() throws Exception {
-		byte[] salt = "we play to win the game".getBytes();
 		String passphrase = "LETSGOROYALS2014";
 		int iterations = 10000;
 		SecretKeyFactory factory = SecretKeyFactory
 				.getInstance("PBKDF2WithHmacSHA1");
 		SecretKey tmp = factory.generateSecret(new PBEKeySpec(passphrase
-				.toCharArray(), salt, iterations, 128));
+				.toCharArray(), generateSalt(), iterations, 128));
 		this.key = new SecretKeySpec(tmp.getEncoded(), "AES");
 
 	}
