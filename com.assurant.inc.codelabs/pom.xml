@@ -6,7 +6,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<properties>
-		<jerseyVersion>2.6</jerseyVersion>
+		<jerseyVersion>2.7</jerseyVersion>
 		<jacksonVersion>1.9.9</jacksonVersion>
 		<logbackVersion>1.0.13</logbackVersion>
 		<mongojavadriverVersion>2.12.0-rc1</mongojavadriverVersion>
@@ -432,8 +432,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.0</version>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>1.7</source>
+					<target>1.7</target>
 					<encoding>${project.build.sourceEncoding}</encoding>
 				</configuration>
 			</plugin>
