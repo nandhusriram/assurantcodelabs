@@ -4,15 +4,20 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.text.IsEqualIgnoringCase.equalToIgnoringCase;
 import static org.junit.Assert.assertThat;
 
+import java.security.Key;
 import java.security.SecureRandom;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.junit.Test;
+
+import com.assurant.inc.codelabs.crypto.KeyStoreUtil;
+import com.sun.crypto.provider.AESCipher;
 
 public class EncryptDecryptTest {
 
@@ -41,6 +46,26 @@ public class EncryptDecryptTest {
 		byte[] ciphertext = aes.doFinal("my cleartext".getBytes());
 		//System.out.println(new String(ciphertext));
 		aes.init(Cipher.DECRYPT_MODE, key);
+		String cleartext = new String(aes.doFinal(ciphertext));
+		System.out.println(cleartext);
+	   
+	    assertThat(cleartext,equalToIgnoringCase("my cleartext"));
+	    assertThat(cleartext,is("my cleartext"));
+	}
+	
+	@Test
+	public void hashCCWithKeyStore() throws Exception
+	{
+		
+        Key key = KeyStoreUtil.getKeyFromKeyStore("/Users/nandhu/aes-keystore.jck", "mystorepass", "jceksaes", "mykeypass");
+		
+		Cipher aes = Cipher.getInstance("AES/CBC/PKCS5Padding");
+		aes.init(Cipher.ENCRYPT_MODE, key);
+		
+		byte[] ciphertext = aes.doFinal("my cleartext".getBytes());
+		//System.out.println(new String(ciphertext));
+		IvParameterSpec iv = new IvParameterSpec(aes.getIV());
+		aes.init(Cipher.DECRYPT_MODE, key,iv);
 		String cleartext = new String(aes.doFinal(ciphertext));
 		System.out.println(cleartext);
 	   
