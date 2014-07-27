@@ -15,7 +15,7 @@ import org.springframework.context.annotation.ComponentScan;
 import com.assurant.inc.jersey.config.JerseyConfig;
 
 @EnableAutoConfiguration
-@ComponentScan(basePackages="com.assurant.inc")
+@ComponentScan(basePackages = "com.assurant.inc")
 public class Application extends SpringBootServletInitializer {
 
 	@Override
@@ -24,23 +24,21 @@ public class Application extends SpringBootServletInitializer {
 	}
 
 	public static void main(String[] args) {
-		ApplicationContext ctx = new Application().configure(new SpringApplicationBuilder(Application.class)).run(
-				args);
-		
+		ApplicationContext ctx = new Application().configure(new SpringApplicationBuilder(Application.class)).run(args);
+
 		System.out.println("Let's inspect the beans provided by Spring Boot:");
 
-        String[] beanNames = ctx.getBeanDefinitionNames();
-        Arrays.sort(beanNames);
-        for (String beanName : beanNames) {
-            System.out.println(beanName);
+		String[] beanNames = ctx.getBeanDefinitionNames();
+		Arrays.sort(beanNames);
+		for (String beanName : beanNames) {
+			System.out.println(beanName);
+		}
 	}
+
+	@Bean
+	public ServletRegistrationBean jerseyServlet() {
+		ServletRegistrationBean registration = new ServletRegistrationBean(new ServletContainer(), "/*");
+		registration.addInitParameter(ServletProperties.JAXRS_APPLICATION_CLASS,JerseyConfig.class.getName());
+		return registration;
 	}
-	
-	 @Bean
-	    public ServletRegistrationBean jerseyServlet() {
-		 ServletRegistrationBean registration = new ServletRegistrationBean(new ServletContainer(), "/*"); 
-		    // our rest resources will be available in the path /rest/*
-		    registration.addInitParameter(ServletProperties.JAXRS_APPLICATION_CLASS, JerseyConfig.class.getName());
-		    return registration;
-	    }
 }
