@@ -1,18 +1,20 @@
-package com.assurant.inc.jersey.rs;
+package com.assurant.inc.jersey.endpoint;
 
-import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import com.assurant.inc.service.IService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.assurant.inc.spring.services.IService;
 
 @Path("myresource")
-public class MyResource {
+@Component
+public class TimeService {
 
-	public @Inject  IService service;
-	
+	private @Autowired IService service;
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
 	public String getIt() 
@@ -22,5 +24,4 @@ public class MyResource {
 		return "Got it! " + service.getCurrentTime();
 		
 	}
-
 }
