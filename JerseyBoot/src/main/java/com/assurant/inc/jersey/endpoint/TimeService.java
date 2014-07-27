@@ -21,7 +21,7 @@ public class TimeService {
 	{
 		System.out.println("get Time called");
 		System.out.println(service);
-		return "Got it! " + service.getCurrentTime();
+		return "Got it!\t" + service.getCurrentTime();
 		
 	}
 }
