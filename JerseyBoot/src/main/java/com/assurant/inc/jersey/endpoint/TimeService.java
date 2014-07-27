@@ -17,9 +17,9 @@ public class TimeService {
 	private @Autowired IService service;
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
-	public String getIt() 
+	public String getTime() 
 	{
-		System.out.println("get It called");
+		System.out.println("get Time called");
 		System.out.println(service);
 		return "Got it! " + service.getCurrentTime();
 		
