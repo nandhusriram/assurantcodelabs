@@ -6,11 +6,15 @@ import org.glassfish.jersey.servlet.ServletContainer;
 import org.glassfish.jersey.servlet.ServletProperties;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
+import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
+import org.springframework.boot.context.embedded.ErrorPage;
 import org.springframework.boot.context.embedded.ServletRegistrationBean;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.http.HttpStatus;
 
 import com.assurant.inc.jersey.config.JerseyConfig;
 
@@ -40,5 +44,22 @@ public class Application extends SpringBootServletInitializer {
 		ServletRegistrationBean registration = new ServletRegistrationBean(new ServletContainer(), "/*");
 		registration.addInitParameter(ServletProperties.JAXRS_APPLICATION_CLASS,JerseyConfig.class.getName());
 		return registration;
+	}
+	
+	@Bean
+	public EmbeddedServletContainerCustomizer containerCustomizer() {
+	 
+	    return new EmbeddedServletContainerCustomizer() {
+	        @Override
+	        public void customize(ConfigurableEmbeddedServletContainer container) {
+	 
+	            ErrorPage error401Page = new ErrorPage(HttpStatus.UNAUTHORIZED, "/401");
+	            ErrorPage error404Page = new ErrorPage(HttpStatus.NOT_FOUND, "/404");
+	            ErrorPage error500Page = new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/500");
+	 
+	            container.addErrorPages(error401Page, error404Page, error500Page);
+	            
+	        }
+	    };
 	}
 }

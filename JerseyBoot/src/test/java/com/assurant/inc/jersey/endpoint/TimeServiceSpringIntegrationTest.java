@@ -2,6 +2,7 @@ package com.assurant.inc.jersey.endpoint;
 
 import static org.junit.Assert.assertEquals;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +17,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.client.RestTemplate;
 
+import com.assurant.inc.jersey.springboot.Application;
+
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = com.assurant.inc.jersey.springboot.Application.class)
+@SpringApplicationConfiguration(classes = Application.class)
 @IntegrationTest
 @WebAppConfiguration
 @ActiveProfiles("test")
@@ -30,6 +33,13 @@ public class TimeServiceSpringIntegrationTest {
 
 	@Test
 	public void contextLoads() {
+		ResponseEntity<String> entity = restTemplate.getForEntity("http://localhost:"
+				+ server.getEmbeddedServletContainer().getPort() + "/myresource", String.class);
+		assertEquals(HttpStatus.OK, entity.getStatusCode());
+	}
+	
+	@Ignore
+	public void dump() {
 		ResponseEntity<String> entity = restTemplate.getForEntity("http://localhost:"
 				+ server.getEmbeddedServletContainer().getPort() + "/myresource", String.class);
 		assertEquals(HttpStatus.OK, entity.getStatusCode());

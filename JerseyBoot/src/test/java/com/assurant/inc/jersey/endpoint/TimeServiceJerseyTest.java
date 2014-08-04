@@ -9,6 +9,7 @@ import org.glassfish.jersey.test.grizzly.GrizzlyTestContainerFactory;
 import org.glassfish.jersey.test.spi.TestContainerException;
 import org.glassfish.jersey.test.spi.TestContainerFactory;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -20,7 +21,7 @@ public class TimeServiceJerseyTest extends JerseyTest {
 	protected Application configure() {
 		enable(TestProperties.LOG_TRAFFIC);
 		enable(TestProperties.DUMP_ENTITY);		
-		forceSet(TestProperties.CONTAINER_PORT, "0");
+		forceSet(TestProperties.CONTAINER_PORT, "0");		
 		System.setProperty("spring.profiles.active", "test");
 		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
 		context.scan("com.assurant.inc");
@@ -40,6 +41,22 @@ public class TimeServiceJerseyTest extends JerseyTest {
 	{
 		String currentTime=target().path("myresource").request(MediaType.TEXT_PLAIN_TYPE)
 		.accept(MediaType.TEXT_PLAIN_TYPE).buildGet().invoke(String.class);
+		Assert.assertNotNull(currentTime);
+	}
+	
+	@Test
+	public void checkSwagger()
+	{
+		String currentTime=target().path("api-docs").request(MediaType.APPLICATION_JSON)
+		.accept(MediaType.APPLICATION_JSON).buildGet().invoke(String.class);
+		Assert.assertNotNull(currentTime);
+	}
+	
+	@Ignore
+	public void myresourcesSwagger()
+	{
+		String currentTime=target().path("api-docs").path("myresource").request(MediaType.APPLICATION_JSON)
+		.accept(MediaType.APPLICATION_JSON).buildGet().invoke(String.class);
 		Assert.assertNotNull(currentTime);
 	}
 }
