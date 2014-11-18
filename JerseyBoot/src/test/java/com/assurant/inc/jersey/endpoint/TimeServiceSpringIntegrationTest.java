@@ -18,6 +18,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.client.RestTemplate;
 
 import com.assurant.inc.jersey.springboot.Application;
+import com.assurant.inc.spring.services.IService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
@@ -28,6 +29,9 @@ public class TimeServiceSpringIntegrationTest {
 
 	@Autowired
 	private EmbeddedWebApplicationContext server;
+	
+	@Autowired
+	private IService service;
 
 	private RestTemplate restTemplate =new TestRestTemplate();
 
@@ -43,5 +47,11 @@ public class TimeServiceSpringIntegrationTest {
 		ResponseEntity<String> entity = restTemplate.getForEntity("http://localhost:"
 				+ server.getEmbeddedServletContainer().getPort() + "/myresource", String.class);
 		assertEquals(HttpStatus.OK, entity.getStatusCode());
+	}
+	
+	@Test
+	public void getTime()
+	{
+		System.out.println(service.getCurrentTime());
 	}
 }
